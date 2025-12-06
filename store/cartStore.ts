@@ -14,10 +14,14 @@ type CartState = {
   removeItem: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
+  isOpen: boolean;
+  openCart: () => void;
+  closeCart: () => void;
 };
 
 export const useCartStore = create<CartState>((set) => ({
   items: [],
+  isOpen: false,
   addItem: (item) =>
     set((state) => {
       const existing = state.items.find((entry) => entry.id === item.id);
@@ -36,10 +40,16 @@ export const useCartStore = create<CartState>((set) => ({
   removeItem: (id) =>
     set((state) => ({ items: state.items.filter((item) => item.id !== id) })),
   updateQuantity: (id, quantity) =>
-    set((state) => ({
-      items: state.items.map((item) =>
-        item.id === id ? { ...item, quantity: Math.max(quantity, 0) } : item
-      ),
-    })),
+    set((state) => {
+      const next = state.items
+        .map((item) =>
+          item.id === id ? { ...item, quantity: Math.max(quantity, 0) } : item
+        )
+        .filter((item) => item.quantity > 0);
+
+      return { items: next };
+    }),
   clearCart: () => set({ items: [] }),
+  openCart: () => set({ isOpen: true }),
+  closeCart: () => set({ isOpen: false }),
 }));

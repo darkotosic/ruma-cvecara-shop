@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import ProductGallery from "@/components/product/ProductGallery";
+import ProductPurchaseActions from "@/components/product/ProductPurchaseActions";
 import { locations } from "@/config/locations";
 import { productsMock } from "@/data/products.mock";
 import { formatPrice } from "@/lib/format-price";
@@ -78,20 +79,7 @@ export default function ProductPage({ params }: ProductPageProps) {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div className="space-y-1">
-                <p className="text-2xl font-semibold text-primary-dark">{formatPrice(product.cena, product.valuta)}</p>
-                <p className="text-sm text-primary-dark/70">Cena uključuje osnovnu dostavu za dostupne zone.</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <button className="rounded-full bg-primary-dark px-5 py-3 text-sm font-semibold text-beige-light transition hover:bg-primary-dark/90">
-                  Dodaj u korpu
-                </button>
-                <button className="rounded-full border border-primary-dark/15 px-5 py-3 text-sm font-semibold text-primary-dark transition hover:border-primary hover:bg-beige-dark">
-                  Sačuvaj želju
-                </button>
-              </div>
-            </div>
+            <ProductPurchaseActions product={product} />
 
             <div className="space-y-3 rounded-2xl border border-primary-dark/10 bg-beige-dark p-5">
               <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary-dark/70">Dostupnost po gradu</p>
