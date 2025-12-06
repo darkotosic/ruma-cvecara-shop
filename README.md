@@ -48,6 +48,27 @@ ruma.cvecara.shop je savremena e-commerce platforma za lokalnu cvećaru, inspiri
 - **Mediji**: imenovanje `kategorija-naziv-proizvoda-hero.webp`; alt tekst na srpskom, opisno.
 - **Pravne stranice**: Uslovi korišćenja, Politika privatnosti, Politika kolačića i Pravila o reklamacijama.
 
+## CMS šema (Strapi)
+
+### Product
+- Polja: naziv (string), slug (UID), opis (rich text), cena (decimal), valuta (string), dimenzije (component: sirina, visina), status dostupnosti (enum: dostupno/nedostupno), bedževi (enum multi-select: novo/akcija/istaknuto), galerija (media), boja (string), tip biljke (string).
+- Relacije: kategorija (Category, 1:N), povodi (Occasion, N:M), dostupnost po gradovima (CityConfig, N:M), hero badge bestSeller (boolean) i featured zastavica za istaknuto.
+
+### Category
+- Naziv (string), slug (UID), opis (tekst), redosled (integer), hero slika (media). Primeri: aranžmani, buketi, korpe, baloni, poklon korpe, dodaci.
+
+### Occasion
+- Naziv (string), slug (UID), opis (tekst), ilustracija (media). Primeri: Rođendani, Godišnjice, 8. mart, Dan zaljubljenih, Nova godina.
+
+### CityConfig
+- Grad (string), slug (UID), domen (string), zone dostave (repeatable component: naziv, cena), porez na dostavu (decimal), radno vreme (repeatable component), hero vizual (media). Služi za povezivanje proizvoda sa dostupnim gradovima.
+
+### HeroCampaign
+- Naslov (string), opis (rich text), slika (media), datum od/do (date), grad (CityConfig, 1:N). Koristi se za lokalizovane hero banere.
+
+### BlogPost
+- Naslov (string), slug (UID), sadržaj (rich text), hero slika (media), tagovi (repeatable string), datum (date). Opcioni teaser/summary field za listing.
+
 ## Plan rada (kratko)
 1. Postaviti osnovnu Next.js/TypeScript strukturu sa Tailwind konfiguracijom.
 2. Definisati CMS šemu za proizvode, povode i gradove; pripremiti seed podatke.
