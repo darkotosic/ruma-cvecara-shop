@@ -1,12 +1,17 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
 import SmartImage from "@/components/common/SmartImage";
 import ProductGallery from "@/components/product/ProductGallery";
 import ProductPurchaseActions from "@/components/product/ProductPurchaseActions";
+import ProductAnalytics from "@/components/product/ProductAnalytics";
+import SeoSchema from "@/components/common/SeoSchema";
 import { locations } from "@/config/locations";
 import { productsMock } from "@/data/products.mock";
 import { formatPrice } from "@/lib/format-price";
+import { buildBreadcrumbSchema, buildProductSchema, getProductMetadata, formatLocationName } from "@/lib/seo";
+import { getCurrentLocation } from "@/lib/current-location";
 
 const dodatniProizvodi = [
   { naziv: "Čokolade Artisanal", opis: "Tamna i mlečna selekcija u premium pakovanju.", cena: 950 },
@@ -18,28 +23,42 @@ type ProductPageProps = {
   params: { slug: string };
 };
 
-function naslovLokacije(slug: string) {
-  return slug
-    .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const product = productsMock.find((item) => item.slug === params.slug);
+  const location = getCurrentLocation();
+
+  if (!product) {
+    return {};
+  }
+
+  return getProductMetadata(product, location);
 }
 
 export default function ProductPage({ params }: ProductPageProps) {
   const product = productsMock.find((item) => item.slug === params.slug);
+  const location = getCurrentLocation();
 
   if (!product) {
     return notFound();
   }
 
-  const dostupneLokacije = locations.filter((location) => product.gradovi.includes(location.slug));
+  const dostupneLokacije = locations.filter((lokacija) => product.gradovi.includes(lokacija.slug));
   const preporuceni = productsMock.filter((item) => item.slug !== product.slug && item.bestSeller).slice(0, 3);
 
   const galerija = [product.glavnaSlika, product.sekundarnaSlika, product.glavnaSlika, product.sekundarnaSlika];
 
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Početna", url: `https://${location.domain}` },
+    { name: "Shop", url: `https://${location.domain}/shop` },
+    { name: product.naziv, url: `https://${location.domain}/p/${product.slug}` },
+  ]);
+  const productSchema = buildProductSchema(product, location);
+
   return (
     <div className="bg-gradient-to-b from-beige-light to-beige pb-16 pt-10">
       <div className="mx-auto max-w-6xl px-6">
+        <SeoSchema data={[breadcrumbSchema, productSchema]} />
+        <ProductAnalytics product={product} />
         <nav aria-label="Navigacija mrvice" className="mb-6 flex items-center gap-2 text-sm text-primary-dark/70">
           <Link href="/" className="font-semibold text-primary-dark hover:text-primary">
             Početna
@@ -92,7 +111,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                   >
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <div>
-                        <p className="text-base font-semibold text-primary-dark">{naslovLokacije(lokacija.slug)}</p>
+                        <p className="text-base font-semibold text-primary-dark">{formatLocationName(lokacija)}</p>
                         <p className="text-sm text-primary-dark/70">{lokacija.adresa}</p>
                       </div>
                       <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-primary-dark">

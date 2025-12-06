@@ -3,15 +3,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import SmartImage from "@/components/common/SmartImage";
+import SeoSchema from "@/components/common/SeoSchema";
 import { blogPostsMock } from "@/data/blog.mock";
+import { buildArticleSchema, buildBreadcrumbSchema, getBlogPostMetadata } from "@/lib/seo";
+import { getCurrentLocation } from "@/lib/current-location";
 
 function getPost(slug: string) {
   return blogPostsMock.find((post) => post.slug === slug);
-}
-
-function createExcerpt(text: string) {
-  if (text.length <= 160) return text;
-  return `${text.slice(0, 157)}...`;
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
@@ -21,60 +19,29 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     return {};
   }
 
-  const description = createExcerpt(post.sadrzaj);
-
-  return {
-    title: `${post.naslov} | Novosti | Ruma Cvećara`,
-    description,
-    openGraph: {
-      title: post.naslov,
-      description,
-      type: "article",
-      url: `https://example.com/novosti/${post.slug}`,
-      images: [
-        {
-          url: post.heroSlika,
-          width: 1200,
-          height: 630,
-          alt: `Hero vizual za priču ${post.naslov}`,
-        },
-      ],
-    },
-  };
+  return getBlogPostMetadata(post);
 }
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const post = getPost(params.slug);
+  const location = getCurrentLocation();
 
   if (!post) {
     return notFound();
   }
 
   const related = blogPostsMock.filter((item) => item.slug !== post.slug).slice(0, 2);
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: post.naslov,
-    description: createExcerpt(post.sadrzaj),
-    image: [post.heroSlika],
-    datePublished: post.datum,
-    author: {
-      "@type": "Person",
-      name: "Ruma Cvećara tim",
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "Ruma Cvećara",
-      logo: {
-        "@type": "ImageObject",
-        url: "/images/logo.png",
-      },
-    },
-  };
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Početna", url: `https://${location.domain}` },
+    { name: "Novosti", url: `https://${location.domain}/novosti` },
+    { name: post.naslov, url: `https://${location.domain}/novosti/${post.slug}` },
+  ]);
+  const articleSchema = buildArticleSchema(post);
 
   return (
     <div className="bg-gradient-to-b from-beige-light to-beige pb-16 pt-10">
       <div className="mx-auto max-w-5xl px-6 space-y-10">
+        <SeoSchema data={[breadcrumbSchema, articleSchema]} />
         <nav aria-label="Navigacija mrvice" className="flex items-center gap-2 text-sm text-primary-dark/70">
           <Link href="/" className="font-semibold text-primary-dark hover:text-primary">
             Početna
@@ -157,8 +124,6 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             ))}
           </div>
         </section>
-
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       </div>
     </div>
   );

@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { FormEvent, useMemo, useState } from "react";
+import { useEffect } from "react";
 
 import { useCurrentLocation } from "../location-context";
 import { formatPrice } from "@/lib/format-price";
 import { getDeliveryCost, getDeliverySlots } from "@/lib/delivery";
 import { validatePromoCode } from "@/data/promo-codes";
 import { useCartStore } from "@/store/cartStore";
+import { trackBeginCheckout, trackPurchase } from "@/lib/analytics";
 
 export default function CheckoutPage() {
   const location = useCurrentLocation();
@@ -37,6 +39,12 @@ export default function CheckoutPage() {
   const delivery = getDeliveryCost(location, selectedZone);
   const discount = promoFromSubtotal?.discount ?? 0;
   const total = subtotal + delivery - discount;
+
+  useEffect(() => {
+    if (items.length === 0) return;
+
+    trackBeginCheckout(items, total, "RSD");
+  }, [items, total]);
 
   const handlePromoApply = () => {
     const result = validatePromoCode(promoInput, subtotal);
@@ -89,6 +97,11 @@ export default function CheckoutPage() {
       }
 
       setStatusMessage(json.message ?? "Porudžbina je uspešno poslata.");
+      trackPurchase(
+        json.orderId,
+        items,
+        { value: json.totals.total, shipping: json.totals.delivery, discount: json.totals.discount },
+      );
       clearCart();
     } catch (error) {
       console.error(error);

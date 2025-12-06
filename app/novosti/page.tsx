@@ -1,12 +1,29 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import SmartImage from "@/components/common/SmartImage";
+import SeoSchema from "@/components/common/SeoSchema";
 import { blogPostsMock } from "@/data/blog.mock";
+import { buildBreadcrumbSchema, getCategoryMetadata } from "@/lib/seo";
+import { getCurrentLocation } from "@/lib/current-location";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const location = getCurrentLocation();
+
+  return getCategoryMetadata("Novosti", location, "/novosti");
+}
 
 export default function NovostiPage() {
+  const location = getCurrentLocation();
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Početna", url: `https://${location.domain}` },
+    { name: "Novosti", url: `https://${location.domain}/novosti` },
+  ]);
+
   return (
     <div className="bg-gradient-to-b from-beige-light to-beige pb-16 pt-10">
       <div className="mx-auto max-w-6xl px-6 space-y-8">
+        <SeoSchema data={breadcrumbSchema} />
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="space-y-2">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-dark/70">Blog</p>
