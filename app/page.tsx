@@ -1,3 +1,5 @@
+import { getCurrentLocation } from "@/lib/current-location";
+
 const heroProducts = [
   {
     name: "Pastelni buket",
@@ -23,11 +25,17 @@ const heroProducts = [
 ];
 
 export default function Home() {
+  const location = getCurrentLocation();
+  const porezProcenat = Math.round(location.porez_dostava * 100);
+  const locationName = location.slug.replace(/-/g, " ");
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-beige-light to-beige px-6 py-10 lg:px-12">
       <section className="mx-auto max-w-5xl space-y-8 text-center">
         <div className="space-y-3">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary-dark/70">ruma.cvecara.shop</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary-dark/70">
+            {location.domain}
+          </p>
           <h1 className="text-4xl font-semibold text-primary-dark sm:text-5xl">Pastelni shop za brzu dostavu cveća</h1>
           <p className="text-lg text-primary-dark/80 sm:text-xl">
             Minimalan, topao i spreman za konverzije: uredna tipografija, CTA u tamno zelenoj i akcenti u ružičastim tonovima.
@@ -43,6 +51,67 @@ export default function Home() {
           <button className="rounded-full border border-primary-dark px-6 py-3 text-sm font-semibold text-primary-dark transition hover:border-primary hover:bg-primary hover:text-primary-dark">
             Kontakt
           </button>
+        </div>
+      </section>
+
+      <section className="mx-auto mt-12 max-w-6xl rounded-3xl bg-white p-8 shadow-lg shadow-primary-dark/10">
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="space-y-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary-dark/60">Trenutna lokacija</p>
+            <div className="space-y-2">
+              <h2 className="text-3xl font-semibold text-primary-dark">{locationName}</h2>
+              <p className="text-primary-dark/80">{location.adresa}</p>
+              <p className="text-primary-dark/80">Telefoni: {location.telefoni.join(" / ")}</p>
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-primary-dark">Radno vreme</p>
+              <ul className="mt-2 space-y-1 text-sm text-primary-dark/80">
+                {location.radno_vreme.map((slot) => (
+                  <li
+                    key={`${slot.dani}-${slot.vreme}`}
+                    className="flex items-center justify-between rounded-md bg-beige-light px-3 py-2"
+                  >
+                    <span className="font-medium text-primary-dark">{slot.dani}</span>
+                    <span>{slot.vreme}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-primary-dark">Zone dostave</p>
+              <dl className="mt-2 space-y-2">
+                {location.zone_dostave.map((zone) => (
+                  <div key={zone.naziv} className="flex items-center justify-between rounded-xl border border-primary-dark/10 bg-primary-dark/5 px-4 py-3">
+                    <dt className="font-medium text-primary-dark">{zone.naziv}</dt>
+                    <dd className="text-sm text-primary-dark/80">{zone.cena === 0 ? "Besplatno" : `${zone.cena} RSD`}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="mt-3 text-xs text-primary-dark/70">Porez na dostavu: {porezProcenat}%</p>
+            </div>
+          </div>
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary to-secondary-light text-beige-light shadow-lg">
+            <div className="absolute inset-0 bg-gradient-to-tr from-primary-dark/60 to-primary/40" aria-hidden />
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-40"
+              style={{ backgroundImage: `url(${location.lokalni_hero_vizual})` }}
+              aria-hidden
+            />
+            <div className="relative z-10 flex h-full flex-col justify-between p-8">
+              <div className="space-y-2">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em]">Lokalni hero vizual</p>
+                <h3 className="text-3xl font-semibold leading-snug">Scene iz {locationName} cvetnog studija</h3>
+                <p className="text-sm text-beige-light/90">
+                  Vizual pomaže da kupci odmah osete lokalni vibe i poverenje u brzu dostavu za njihov komšiluk.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3 text-sm font-semibold">
+                <span className="rounded-full bg-white/20 px-4 py-2">Brza isporuka</span>
+                <span className="rounded-full bg-white/20 px-4 py-2">Lokalna radionica</span>
+                <span className="rounded-full bg-white/20 px-4 py-2">Personalizacija buketa</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
