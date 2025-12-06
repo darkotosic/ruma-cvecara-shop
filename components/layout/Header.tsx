@@ -34,7 +34,10 @@ export default function Header() {
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-6 text-sm font-semibold text-primary-dark/80 lg:flex">
+        <nav
+          className="hidden items-center gap-6 text-sm font-semibold text-primary-dark/80 lg:flex"
+          aria-label="Glavna navigacija"
+        >
           {navItems.map((item) => (
             <Link
               key={item.href}

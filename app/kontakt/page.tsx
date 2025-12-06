@@ -180,15 +180,15 @@ export default function KontaktPage() {
                 {errors.poruka && touched.poruka ? <p className="text-xs font-semibold text-accent">{errors.poruka}</p> : null}
               </div>
 
-              <div className="flex flex-wrap items-center gap-3 text-sm text-primary-dark/70">
+              <div className="space-y-2 text-sm text-primary-dark/70">
                 <button
                   type="submit"
                   disabled={!isValid}
-                  className="rounded-full bg-primary-dark px-6 py-3 text-sm font-semibold text-beige-light transition hover:bg-primary-dark/90 disabled:cursor-not-allowed disabled:bg-primary/40"
+                  className="w-full rounded-full bg-primary-dark px-6 py-3 text-sm font-semibold text-beige-light transition hover:bg-primary-dark/90 disabled:cursor-not-allowed disabled:bg-primary/40"
                 >
                   Pošalji poruku
                 </button>
-                <span className="text-xs text-primary-dark/70">Forma proverava polja u realnom vremenu.</span>
+                <span className="block text-xs text-primary-dark/70">Forma proverava polja u realnom vremenu.</span>
               </div>
             </form>
           </section>

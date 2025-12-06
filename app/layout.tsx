@@ -6,6 +6,7 @@ import "./globals.css";
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import MobileActionBar from "@/components/layout/MobileActionBar";
 import CartDrawer from "@/components/cart/CartDrawer";
 import { LocationProvider } from "./location-context";
 import { getCurrentLocation } from "@/lib/current-location";
@@ -55,10 +56,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <LocationProvider value={currentLocation}>
           <div className="flex min-h-screen flex-col">
             <Header />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 pb-24 md:pb-0">{children}</main>
             <Footer />
           </div>
           <Analytics />
+          <MobileActionBar />
           <CartDrawer />
         </LocationProvider>
       </body>
