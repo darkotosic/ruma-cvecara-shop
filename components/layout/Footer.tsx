@@ -8,6 +8,7 @@ const legalLinks = [
   { href: "/uslovi-koriscenja", label: "Uslovi korišćenja" },
   { href: "/politika-privatnosti", label: "Politika privatnosti" },
   { href: "/politika-kolacica", label: "Politika kolačića" },
+  { href: "/pravila-reklamacija", label: "Pravila reklamacija" },
 ];
 
 const socialLinks = [
