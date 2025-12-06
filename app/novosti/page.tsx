@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import SmartImage from "@/components/common/SmartImage";
 import { blogPostsMock } from "@/data/blog.mock";
 
 export default function NovostiPage() {
@@ -24,7 +25,12 @@ export default function NovostiPage() {
           {blogPostsMock.map((post) => (
             <article key={post.id} className="flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-card">
               <div className="relative h-48 overflow-hidden">
-                <img src={post.heroSlika} alt={post.naslov} className="h-full w-full object-cover" />
+                <SmartImage
+                  src={post.heroSlika}
+                  alt={`Naslovna fotografija za tekst "${post.naslov}"`}
+                  fill
+                  variant="grid"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/20 to-transparent" aria-hidden />
               </div>
               <div className="flex flex-1 flex-col gap-3 p-5">

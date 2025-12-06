@@ -1,3 +1,4 @@
+import SmartImage from "@/components/common/SmartImage";
 import { getCurrentLocation } from "@/lib/current-location";
 
 const heroProducts = [
@@ -5,22 +6,22 @@ const heroProducts = [
     name: "Pastelni buket",
     price: "4.200 RSD",
     badge: "novo",
-    primary: "/images/pastel-primary.jpg",
-    secondary: "/images/pastel-secondary.jpg",
+    primary: "/images/buketi-pastelni-buket-hero.webp",
+    secondary: "/images/buketi-pastelni-buket-hero-alt.webp",
   },
   {
     name: "Zimski aranžman",
     price: "5.800 RSD",
     badge: "akcija",
-    primary: "/images/winter-primary.jpg",
-    secondary: "/images/winter-secondary.jpg",
+    primary: "/images/aranzmani-zimski-aranzman-hero.webp",
+    secondary: "/images/aranzmani-zimski-aranzman-hero-alt.webp",
   },
   {
     name: "Letnja kutija",
     price: "3.600 RSD",
     badge: "istaknuto",
-    primary: "/images/summer-primary.jpg",
-    secondary: "/images/summer-secondary.jpg",
+    primary: "/images/poklon-kutije-letnja-kutija-hero.webp",
+    secondary: "/images/poklon-kutije-letnja-kutija-hero-alt.webp",
   },
 ];
 
@@ -130,15 +131,19 @@ export default function Home() {
           {heroProducts.map((product) => (
             <article key={product.name} className="product-card">
               <div className="product-card__image">
-                <div
+                <SmartImage
+                  src={product.primary}
+                  alt={`Glavna fotografija aranžmana ${product.name} iz hero izbora`}
+                  fill
+                  variant="card"
                   className="product-card__image-primary"
-                  style={{ backgroundImage: `url(${product.primary})` }}
-                  aria-hidden
                 />
-                <div
+                <SmartImage
+                  src={product.secondary}
+                  alt={`Sekundarna fotografija aranžmana ${product.name} sa dodatnim detaljima`}
+                  fill
+                  variant="card"
                   className="product-card__image-secondary"
-                  style={{ backgroundImage: `url(${product.secondary})` }}
-                  aria-hidden
                 />
                 <span className="product-card__badge">{product.badge}</span>
               </div>

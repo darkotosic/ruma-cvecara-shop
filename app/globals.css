@@ -43,7 +43,7 @@ h3 {
 
   .product-card__image-primary,
   .product-card__image-secondary {
-    @apply absolute inset-0 h-full w-full bg-cover bg-center transition-opacity duration-500 ease-out;
+    @apply absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ease-out;
   }
 
   .product-card__image-secondary {
