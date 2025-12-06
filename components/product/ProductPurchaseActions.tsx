@@ -7,6 +7,7 @@ import { formatPrice } from "@/lib/format-price";
 import { getDeliveryRange, getDeliverySlots } from "@/lib/delivery";
 import type { Product } from "@/lib/cms-types";
 import { useCartStore } from "@/store/cartStore";
+import { trackAddToCart } from "@/lib/analytics";
 
 type Props = {
   product: Product;
@@ -21,6 +22,8 @@ export default function ProductPurchaseActions({ product }: Props) {
 
   const handleAdd = () => {
     if (product.status !== "dostupno") return;
+
+    trackAddToCart(product);
 
     addItem({
       id: product.id,
