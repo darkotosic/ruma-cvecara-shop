@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo } from "react";
 
+import SmartImage from "@/components/common/SmartImage";
 import { useCurrentLocation } from "@/app/location-context";
 import { formatPrice } from "@/lib/format-price";
 import { getDeliveryRange } from "@/lib/delivery";
@@ -74,7 +75,13 @@ export default function CartDrawer() {
                 >
                   <div className="h-16 w-16 overflow-hidden rounded-xl bg-white">
                     {item.image ? (
-                      <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
+                      <SmartImage
+                        src={item.image}
+                        alt={`Prikaz proizvoda ${item.name} u korpi`}
+                        width={64}
+                        height={64}
+                        variant="card"
+                      />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center text-xs text-primary-dark/60">Bez slike</div>
                     )}

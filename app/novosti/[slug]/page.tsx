@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import SmartImage from "@/components/common/SmartImage";
 import { blogPostsMock } from "@/data/blog.mock";
 
 function getPost(slug: string) {
@@ -35,7 +36,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
           url: post.heroSlika,
           width: 1200,
           height: 630,
-          alt: post.naslov,
+          alt: `Hero vizual za priču ${post.naslov}`,
         },
       ],
     },
@@ -88,7 +89,12 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
         <article className="overflow-hidden rounded-3xl bg-white shadow-card">
           <div className="relative h-80 w-full">
-            <img src={post.heroSlika} alt={post.naslov} className="h-full w-full object-cover" />
+            <SmartImage
+              src={post.heroSlika}
+              alt={`Hero fotografija za tekst ${post.naslov}`}
+              fill
+              variant="hero"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/40 to-transparent" aria-hidden />
             <div className="absolute bottom-6 left-6 space-y-2 text-beige-light">
               <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-white">
@@ -128,11 +134,14 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             {related.map((item) => (
               <article key={item.id} className="rounded-2xl border border-primary-dark/10 bg-beige-dark p-4 shadow-sm">
                 <div className="flex items-center gap-3">
-                  <img
-                    src={item.heroSlika}
-                    alt={item.naslov}
-                    className="h-20 w-24 rounded-xl object-cover shadow-inner"
-                  />
+                  <div className="relative h-20 w-24 overflow-hidden rounded-xl shadow-inner">
+                    <SmartImage
+                      src={item.heroSlika}
+                      alt={`Uvodna fotografija za tekst ${item.naslov}`}
+                      fill
+                      variant="card"
+                    />
+                  </div>
                   <div className="space-y-1">
                     <p className="text-sm font-semibold text-primary-dark">{item.naslov}</p>
                     <p className="text-xs text-primary-dark/70">{new Date(item.datum).toLocaleDateString("sr-RS")}</p>

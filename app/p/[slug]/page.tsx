@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import SmartImage from "@/components/common/SmartImage";
 import ProductGallery from "@/components/product/ProductGallery";
 import ProductPurchaseActions from "@/components/product/ProductPurchaseActions";
 import { locations } from "@/config/locations";
@@ -158,7 +159,12 @@ export default function ProductPage({ params }: ProductPageProps) {
             {preporuceni.map((item) => (
               <article key={item.id} className="rounded-2xl border border-primary-dark/10 bg-beige-dark p-4 shadow-sm">
                 <div className="relative h-40 overflow-hidden rounded-xl">
-                  <img src={item.glavnaSlika} alt={item.naziv} className="h-full w-full object-cover" />
+                  <SmartImage
+                    src={item.glavnaSlika}
+                    alt={`Fotografija aranžmana ${item.naziv} iz preporuka`}
+                    fill
+                    variant="card"
+                  />
                   <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary-dark shadow">
                     {item.kategorija}
                   </span>
