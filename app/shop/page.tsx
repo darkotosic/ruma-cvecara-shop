@@ -9,6 +9,7 @@ import FiltersSidebar from "@/components/shop/FiltersSidebar";
 import { productsMock } from "@/data/products.mock";
 import type { Product, ProductFilters } from "@/lib/cms-types";
 import { useCurrentLocation } from "../location-context";
+import { useCartStore } from "@/store/cartStore";
 
 const PAGE_SIZE = 9;
 
@@ -17,6 +18,7 @@ export default function ShopPage() {
   const [filters, setFilters] = useState<ProductFilters>({});
   const [currentPage, setCurrentPage] = useState(1);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
+  const { addItem, openCart } = useCartStore();
 
   const locationProducts = useMemo(
     () => productsMock.filter((product) => product.gradovi.includes(location.slug)),
@@ -95,8 +97,16 @@ export default function ShopPage() {
   };
 
   const handleAddToCart = (product: Product) => {
-    // Integracija korpe nije deo zadatka; za sada samo prikazujemo informativnu poruku.
-    console.info(`Dodaj u korpu: ${product.naziv}`);
+    if (product.status !== "dostupno") return;
+
+    addItem({
+      id: product.id,
+      name: product.naziv,
+      price: product.cena,
+      quantity: 1,
+      image: product.glavnaSlika,
+    });
+    openCart();
   };
 
   return (

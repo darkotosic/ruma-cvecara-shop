@@ -5,6 +5,7 @@ import "./globals.css";
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import CartDrawer from "@/components/cart/CartDrawer";
 import { LocationProvider } from "./location-context";
 import { getCurrentLocation } from "@/lib/current-location";
 import type { ReactNode } from "react";
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Footer />
           </div>
           <Analytics />
+          <CartDrawer />
         </LocationProvider>
       </body>
     </html>
