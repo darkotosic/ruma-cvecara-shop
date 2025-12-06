@@ -56,5 +56,8 @@ ruma.cvecara.shop je savremena e-commerce platforma za lokalnu cvećaru, inspiri
 5. Dodati analitiku, SEO optimizaciju (Open Graph, structured data) i pristupačnost (WCAG AA).
 6. Pripremiti CI za testove, lint i preview deploy.
 
-## Lokalno pokretanje (placeholder)
-Codebase još nije postavljen. Kada se inicijalizuje, dodati korake za instalaciju (`pnpm install`), razvoj (`pnpm dev`) i testiranje (`pnpm test` / `pnpm lint`).
+## Lokalno pokretanje
+1. Instaliraj zavisnosti: `npm install` ili `pnpm install`.
+2. Pokreni razvojni server: `npm run dev` i otvori `http://localhost:3000`.
+3. Proveri linters: `npm run lint`.
+4. Build za produkciju: `npm run build` pa `npm start`.
