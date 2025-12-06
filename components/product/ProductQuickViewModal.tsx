@@ -20,7 +20,13 @@ export default function ProductQuickViewModal({ product, open, onClose, onAddToC
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-primary-dark/30 px-4 py-10 backdrop-blur-sm">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-primary-dark/30 px-4 py-10 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="product-quickview-title"
+      aria-describedby="product-quickview-description"
+    >
       <div className="relative w-full max-w-4xl overflow-hidden rounded-3xl bg-white shadow-2xl">
         <button
           type="button"
@@ -55,8 +61,15 @@ export default function ProductQuickViewModal({ product, open, onClose, onAddToC
           <div className="flex flex-col gap-4 p-6">
             <div className="space-y-2">
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary-dark/60">Brzi pregled</p>
-              <h3 className="text-2xl font-semibold text-primary-dark">{product.naziv}</h3>
-              <p className="text-sm text-primary-dark/80">{product.opis}</p>
+              <h3
+                id="product-quickview-title"
+                className="text-2xl font-semibold text-primary-dark"
+              >
+                {product.naziv}
+              </h3>
+              <p id="product-quickview-description" className="text-sm text-primary-dark/80">
+                {product.opis}
+              </p>
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-sm text-primary-dark/80">
@@ -82,7 +95,9 @@ export default function ProductQuickViewModal({ product, open, onClose, onAddToC
 
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="text-3xl font-semibold text-primary-dark">{formatPrice(product.cena, product.valuta)}</p>
+                <p className="text-3xl font-semibold text-primary-dark">
+                  {formatPrice(product.cena, product.valuta)}
+                </p>
                 <p className="text-xs text-primary-dark/70">Cena za brzu dostavu u vašem gradu</p>
               </div>
               <div className="flex gap-2">

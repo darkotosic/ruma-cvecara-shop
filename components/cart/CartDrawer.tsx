@@ -31,18 +31,29 @@ export default function CartDrawer() {
           isOpen ? "opacity-100" : "opacity-0"
         }`}
         onClick={closeCart}
+        aria-hidden
       />
 
       <aside
         className={`absolute right-0 top-0 h-full w-full max-w-md transform bg-white shadow-2xl transition duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
-        aria-label="Pregled korpe"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="cart-drawer-title"
+        aria-describedby="cart-drawer-description"
       >
         <div className="flex items-center justify-between border-b border-primary-dark/10 px-6 py-4">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-dark/60">Korpa</p>
-            <h2 className="text-xl font-semibold text-primary-dark">Sažetak porudžbine</h2>
+            <p
+              id="cart-drawer-description"
+              className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-dark/60"
+            >
+              Korpa
+            </p>
+            <h2 id="cart-drawer-title" className="text-xl font-semibold text-primary-dark">
+              Sažetak porudžbine
+            </h2>
           </div>
           <button
             type="button"

@@ -10,8 +10,8 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          light: "#CBE3D3",
-          DEFAULT: "#9DC4B5",
+          light: "#BFD8C9",
+          DEFAULT: "#8FB3A3",
           dark: "#2F5D50",
         },
         beige: {
@@ -20,8 +20,8 @@ const config: Config = {
           dark: "#E2D6C5",
         },
         accent: {
-          DEFAULT: "#D95F7C",
-          dark: "#B44A63",
+          DEFAULT: "#C14968",
+          dark: "#9E3652",
         },
       },
       boxShadow: {

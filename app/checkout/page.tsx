@@ -266,7 +266,7 @@ export default function CheckoutPage() {
             <div className="grid gap-4 md:grid-cols-[2fr_1fr]">
               <div className="space-y-2 rounded-2xl bg-beige-dark p-4">
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-dark/70">Promo kod</p>
-                <div className="flex flex-wrap items-center gap-3">
+                <div className="flex flex-col gap-3 sm:flex-row">
                   <input
                     type="text"
                     value={promoInput}
@@ -277,7 +277,7 @@ export default function CheckoutPage() {
                   <button
                     type="button"
                     onClick={handlePromoApply}
-                    className="rounded-full bg-primary-dark px-4 py-2 text-sm font-semibold text-beige-light transition hover:bg-primary-dark/90"
+                    className="w-full rounded-full bg-primary-dark px-4 py-2 text-sm font-semibold text-beige-light transition hover:bg-primary-dark/90 sm:w-auto"
                   >
                     Primeni
                   </button>
