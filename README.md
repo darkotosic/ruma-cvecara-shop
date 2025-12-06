@@ -1,7 +1,7 @@
 # ruma.cvecara.shop
 
 ## Pregled
-ruma.cvecara.shop je savremena e-commerce platforma za lokalnu cvećaru, inspirisana konkurentskim sajtom prikazanim na screenshotovima, ali sa ciljanim unapređenjima u brzini, dostupnosti i UX-u. Plan je da se sa jedne codebase instanciraju poddomene za 15 gradova uz dosledan vizuelni identitet i lokalizovane sadržaje.
+ruma.cvecara.shop je savremena e-commerce platforma za lokalnu cvećaru, inspirisana modernim sajtovima, ali sa ciljanim unapređenjima u brzini, dostupnosti i UX-u. Plan je da se sa jedne codebase instanciraju poddomene za 15 gradova uz dosledan vizuelni identitet i lokalizovane sadržaje.
 
 ## Ciljevi
 - **Bolji UX od konkurencije**: jasniji CTA-ovi, stabilniji hero slider, preciznije filtriranje i brže učitavanje proizvoda.
