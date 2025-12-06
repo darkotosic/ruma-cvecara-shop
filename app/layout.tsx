@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 import { LocationProvider } from "./location-context";
 import { getCurrentLocation } from "@/lib/current-location";
 import type { ReactNode } from "react";
@@ -19,7 +22,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="sr">
       <body className={`${inter.className} bg-beige-light text-primary-dark`}>
-        <LocationProvider value={currentLocation}>{children}</LocationProvider>
+        <LocationProvider value={currentLocation}>
+          <div className="flex min-h-screen flex-col">
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
+          <Analytics />
+        </LocationProvider>
       </body>
     </html>
   );
